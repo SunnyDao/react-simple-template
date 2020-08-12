@@ -5,11 +5,8 @@
   "author": "Zeng <1208442830@qq.com>",
   "license": "MIT",
   "scripts": {
-    "start": "npm run dev",
-    "dev": "node build/dev-server.js",
-    "server": "webpack-dev-server",
-    "build": "webpack",
-    "build2": "webpack --config build/webpack.base.config.js"
+    "server": "webpack-dev-server --config build/webpack.dev.conf.js  ",
+    "build": "webpack -p --mode production --progress --config ./build/webpack.prod.conf.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
