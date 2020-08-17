@@ -5,11 +5,12 @@
   "author": "Zeng <1208442830@qq.com>",
   "license": "MIT",
   "scripts": {
-    "server": "webpack-dev-server --config build/webpack.dev.conf.js  ",
-    "build": "webpack -p --mode production --progress --config ./build/webpack.prod.conf.js"
+    "server": "webpack-dev-server --inline --progress --config build/webpack.dev.config.js",
+    "build": "webpack -p --mode production --progress --config build/webpack.prod.config.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "babel-polyfill": "^6.26.0",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.19",
     "moment": "^2.27.0",
@@ -29,18 +30,44 @@
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "autoprefixer": "^9.8.5",
+    "babel-eslint": "^11.0.0-beta.2",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^6.0.3",
+    "copy-webpack-plugin": "^4.0.1",
     "core-js": "^3.6.5",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.6.0",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-import-resolver-babel-module": "^5.1.2",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-standard": "^4.0.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^6.0.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^4.3.0",
     "less": "^3.12.2",
     "less-loader": "^6.2.0",
+    "mini-css-extract-plugin": "^0.10.0",
     "mockjs": "^1.1.0",
+    "node-notifier": "^8.0.0",
     "node-sass": "^4.14.1",
+    "portfinder": "^1.0.28",
+    "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
+    "postcss-safe-parser": "^4.0.2",
+    "postcss-url": "^8.0.0",
+    "prettier": "^2.0.5",
     "sass-loader": "^9.0.2",
     "style-loader": "^1.2.1",
     "url-loader": "^4.1.0",
@@ -48,7 +75,7 @@
     "webpack-bundle-analyzer": "^3.8.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3",
-    "webpack-merge": "^5.0.9"
+    "webpack-merge": "^5.1.1"
   },
   "engines": {
     "node": ">=8.9",
@@ -56,6 +83,7 @@
   },
   "browserslist": [
     "> 1%",
-    "last 2 versions"
+    "last 2 versions",
+    "not ie <= 8"
   ]
 }

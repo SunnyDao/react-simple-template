@@ -4,7 +4,7 @@ const path = require('path')
 module.exports = {
   dev: {
     env: 'development',
-    port: process.env.PORT || 8070,
+    port: process.env.PORT || 9527,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',

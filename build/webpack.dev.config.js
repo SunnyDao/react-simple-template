@@ -1,35 +1,36 @@
 'use strict'
 
+const path = require('path')
+const portfinder = require('portfinder')
+
 const webpack = require('webpack')
-const merge = require('webpack-merge')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { merge } = require('webpack-merge')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const utils = require('./utils')
 const config = require('./config')
 const baseWebpackConfig = require('./webpack.base.config')
 
+const HOST = process.env.HOST
+const PORT = process.env.PORT && Number(process.env.PORT)
+
 const devWebpackConfig = merge(baseWebpackConfig, {
   mode: 'development',
+  module: {
+    rules: utils.styleLoaders({ sourceMap: true, usePostCSS: true, extract: false, })
+  },
   devtool: 'cheap-module-eval-source-map',
   devServer: {
     clientLogLevel: 'warning',
-    historyApiFallback: {
-      rewrites: [
-        { 
-          from: /\/(index).*$/, 
-          to: function({ match }) {
-            return path.posix.join('/', `${match[1]}.html`)
-          },
-        },
-      ],
-    },
+    historyApiFallback: true,
     contentBase: false, // since we use CopyWebpackPlugin.
     hot: true,
     compress: true,
     host: HOST || 'localhost',
     port: PORT || '9527',
-    open: true,
+    open: false,
     overlay: { warnings: false, errors: true },
     publicPath: '/',
     proxy: config.dev.proxyTable,
@@ -48,11 +49,27 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.NamedModulesPlugin(),
     // 不显示错误信息
     new webpack.NoEmitOnErrorsPlugin(),
+
+    // https://github.com/ampedandwired/html-webpack-plugin
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      title: 'React Demo',
+      template: path.resolve(__dirname, '../src/index.ejs'),
+      inject: true
+    }),
+    // copy custom static assets
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../public'),
+        to: config.dev.assetsSubDirectory,
+        ignore: ['.*']
+      }
+    ])
   ]
 })
 
 module.exports = new Promise((resolve, reject) => {
-  portfinder.basePort = PORT
+  portfinder.basePort = PORT || config.dev.port
   portfinder.getPort((err, port) => {
     if (err) {
       reject(err)

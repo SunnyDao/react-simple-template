@@ -1,0 +1,20 @@
+{
+  "presets": [
+    "@babel/preset-react",
+    [
+      "@babel/preset-env", {
+        "useBuiltIns": "usage", // 根据代码按需引入@babel/polyfill 以减小打包大小
+        "corejs": 3
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-proposal-class-properties",
+    [
+      "@babel/plugin-transform-runtime", {
+
+      }
+    ]
+  ]
+}

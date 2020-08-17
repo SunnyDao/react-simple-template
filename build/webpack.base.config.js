@@ -3,13 +3,14 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const utils = require('./utils')
-const config = require('../config')
+const config = require('./config')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
 module.exports = {
+  context: path.resolve(__dirname, '../'),
   entry: {
     app: [
       'babel-polyfill',
@@ -17,7 +18,7 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve('dist'),
+    path: path.resolve(__dirname, '../dist'),
     filename: "[name].[hash:8].js",
     publicPath: '/',
     libraryTarget: 'umd',
@@ -35,8 +36,18 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
+        enforce: 'pre',
         exclude: /node_modules/,  // 不编译某个目录下的文件
         include: resolve('src'),  // 只在include包含的目录下进行loader编译
+        use: [{
+          loader: 'babel-loader',
+        }, {
+          loader: 'eslint-loader', // 指定启用eslint-loader
+          options: {
+            formatter: require('eslint-friendly-formatter'),
+            emitWarning: false
+          }
+        }]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
